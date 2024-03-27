@@ -54,7 +54,45 @@ taskRouter.post("/",async(req,res)=>{
     
 
 
-   
+    taskRouter.get('/', async (req, res) => {
+        const { title } = req.query;
+      
+        try {
+          const posts = await TaskModel.find({ title: { $regex: title, $options: 'i' } });
+          res.json(posts);
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('An error occurred');
+        }
+      });
+
+      taskRouter.get('/', async (req, res) => {
+        const { category } = req.query;
+      
+        try {
+          const posts = await TaskModel.find({
+            category: { $regex: category, $options: 'i' },
+          });
+          res.json(posts);
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('An error occurred');
+        }
+      });
+
+      taskRouter.get('/api/blogs', async (req, res) => {
+        const { sort, order } = req.query;
+      
+        try {
+          const sortOrder = order === 'asc' ? 1 : -1;
+          const posts = await TaskModel.find().sort({ [sort]: sortOrder });
+          res.json(posts);
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('An error occurred');
+        }
+      });
+
 module.exports={
     taskRouter
 }
