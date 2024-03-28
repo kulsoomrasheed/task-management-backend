@@ -14,8 +14,8 @@ const taskSchema = mongoose.Schema({
         maxlength: [1000, 'Description cannot exceed 1000 characters']
     },
     status: {
-        type: String,
-        default: 'todo'
+        type: Boolean,
+        default: false
     },
     createdAt: {
         type: Date,

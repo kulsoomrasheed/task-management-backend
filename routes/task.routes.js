@@ -19,7 +19,7 @@ taskRouter.post("/",async(req,res)=>{
    const userID = req.body.userID;
     const { title ,status,desc} = req.body;
     try{
-    const tasks= new TaskModel({  title ,status,desc,userID:userID})
+    const tasks= new TaskModel({  title ,desc,userID:userID})
     await tasks.save()
     res.status(200).json({msg:"A new todo has been added",tasks})
     }catch{
