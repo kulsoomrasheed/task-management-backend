@@ -53,7 +53,28 @@ taskRouter.post("/",async(req,res)=>{
 
     
 
+    taskRouter.patch("/edit/:id",async(req,res)=>{
+      let ID=req.params.id
+      let payload=req.body
+      let data =await TaskModel.findOne({_id:ID})
+      let userID_post=data.userID
+      let userID_req=req.body.userID
+      try {
+               if((userID_post==userID_req)){
+                  await TaskModel.findByIdAndUpdate({
+                   _id:ID
+              },payload)
+              res.send(`data with ${ID} is updated`)
+          }else{
+              res.send("Not authorized")
+          }
+          
+      } catch (error) {
+          res.send(error)
+      }
+  })
 
+  
     taskRouter.get('/', async (req, res) => {
         const { title } = req.query;
       

@@ -62,6 +62,35 @@ if (user){
     res.json({err:err.message})
     }
 })
+userRouter.get("/",async(req,res)=>{
+    try {
+        const users = await UserModel.find();
+        res.status(200).json({msg:"Success",users});
+      } catch (error) {
+        console.log('Error fetching tasks:', error.message);
+        res.status(500).json({ error: 'An error occurred while fetching users' });
+      }
+})
+userRouter.patch("/edit/:id",async(req,res)=>{
+    let ID=req.params.id
+    let payload=req.body
+    let data =await UserModel.findOne({_id:ID})
+    let userID_post=data.userID
+    let userID_req=req.body.userID
+    try {
+             if((userID_post==userID_req)){
+                await UserModel.findByIdAndUpdate({
+                 _id:ID
+            },payload)
+            res.send(`user with ${ID} is updated`)
+        }else{
+            res.send("Not authorized")
+        }
+        
+    } catch (error) {
+        res.send(error)
+    }
+})
 
 module.exports={
     userRouter
