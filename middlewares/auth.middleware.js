@@ -7,6 +7,7 @@ const auth = (req, res, next) => {
             if (decoded) {
                 console.log(decoded,"line. 8");
                 req.body.userID=decoded.userID;
+                req.body.username=decoded.username;
 
 console.log(decoded);
                 next();

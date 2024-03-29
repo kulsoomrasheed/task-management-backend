@@ -19,7 +19,9 @@ const taskSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    userID:String
+    userID:String,
+    username:String
+    
 }, {
     versionKey: false
 });
